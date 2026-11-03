@@ -36,6 +36,16 @@
     <vis name="WLSFiberVis" alpha="1.0" r="1.0" g="0.3" b="0.2" showDaughters="true" visible="true"/>
     <vis name="FiberCladdingVis" alpha="1.0" r="1.0" g="0.6" b="0.2" showDaughters="true" visible="true"/>
 
+        <!-- Silicon Wrapper (copied from IDEA_o1_v03/display.xml) -->
+    <vis name="SiWrVis"          alpha="0.2" r="1.0" g="1.0" b="0.0" showDaughters="false" visible="true"/>
+    <vis name="SiWrEnvVis"       alpha="0.2" r="1.0" g="1.0" b="0.0" showDaughters="true"  visible="true"/>
+    <vis name="SiWrSensitiveVis" alpha="1.0" r="1.0" g="1.0" b="0.0" showDaughters="true"  visible="true"/>
+    <vis name="SiWrPeripheryVis" alpha="1.0" r="200/255" g="254/255" b="0.0" showDaughters="true" visible="true"/>
+    <vis name="SiWrCableVis"     alpha="1.0" r="0.0" g="1.0" b="0.4" showDaughters="true"  visible="true"/>
+    <vis name="SiWrPipingVis"    alpha="1.0" r="1.0" g="1.0" b="1.0" showDaughters="true"  visible="true"/>
+    <vis name="SiWrWaterVis"     alpha="1.0" r="0.0" g="0.0" b="1.0" showDaughters="true"  visible="true"/>
+    <vis name="SupportVis"       alpha="1"   r="0.2" g="0.2" b="0.2" showDaughters="true"  visible="true"/>
+
   </display>
 
 </lccdd>
