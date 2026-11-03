@@ -8,8 +8,7 @@
     <constant name="DetID_ECAL_Endcap"  value="11"/>
     <constant name="DetID_HCAL_Barrel"  value="12"/>
     <constant name="DetID_HCAL_Endcap"  value="13"/>
-    <constant name="DetID_SiWr_Barrel"  value="23"/>
-    <constant name="DetID_SiWr_Disks"   value="24"/>
+    <constant name="DetID_OTEndcap"     value="4"/>
     <constant name="env_safety" value="0.1*mm"/>
 
     <constant name="tracker_region_zmax"   value="2.1*m"/>
@@ -26,10 +25,7 @@
     <constant name="Solenoid_coil_half_length"      value="2.0*m"/>
     <constant name="Solenoid_coil_outer_radius"      value="2.7*m"/>
 
-    <comment> Silicon Wrapper envelope (copied from IDEA_o1_v03/DectDimensions_IDEA_o1_v03.xml) </comment>
-    <constant name="SiWrB_inner_radius" value="2040*mm"/>
-    <constant name="SiWrB_outer_radius" value="2080*mm"/>
-    <constant name="SiWrB_half_length"  value="2400*mm"/>
+    <comment> Silicon Wrapper Endcap envelope (copied from IDEA_o1_v03/DectDimensions_IDEA_o1_v03.xml) </comment>
     <constant name="SiWrD_inner_radius" value="350.0*mm"/>
     <constant name="SiWrD_outer_radius" value="2040.0*mm"/>
     <constant name="SiWrD_zmin"         value="2300.0*mm"/>
@@ -37,8 +33,7 @@
 
   </define>
   <regions>
-    <region name="SiWrBRegion"/>
-    <region name="SiWrDRegion"/>
+    <region name="OTEndcapRegion"/>
   </regions>
 
 
