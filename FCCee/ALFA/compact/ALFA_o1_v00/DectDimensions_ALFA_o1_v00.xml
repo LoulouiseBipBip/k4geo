@@ -28,8 +28,8 @@
     <comment> Silicon Wrapper Endcap envelope (copied from IDEA_o1_v03/DectDimensions_IDEA_o1_v03.xml) </comment>
     <constant name="SiWrD_inner_radius" value="350.0*mm"/>
     <constant name="SiWrD_outer_radius" value="2040.0*mm"/>
-    <constant name="SiWrD_zmin"         value="2300.0*mm"/>
-    <constant name="SiWrD_zmax"         value="2340.0*mm"/>
+    <constant name="SiWrD_zmin"         value="1395.0*mm"/>
+    <constant name="SiWrD_zmax"         value="2125.0*mm"/>
 
   </define>
   <regions>
