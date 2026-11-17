@@ -51,7 +51,7 @@
   <include ref="OuterTrackerBarrel_o1_v00.xml" />
 
   <comment> Endcaps: IDEA silicon wrapper endcaps, first try </comment>
-  <include ref="OuterTrackerEndcap_o1_v00.xml" />
+  <include ref="OuterTrackerEndcap_o1_v01.xml" />
 
   <comment> Grainita ECAL </comment>
   <include ref="Grainita_ECAL_Barrel_o1_v02.xml" /> 

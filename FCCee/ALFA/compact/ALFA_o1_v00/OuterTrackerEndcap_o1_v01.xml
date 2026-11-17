@@ -1,0 +1,264 @@
+<!-- Changes :
+   o1_v01 : First version of silicon wrapper for IDEA
+-->
+
+<lccdd>
+    <!--
+  IDEA silicon wrapper detector.
+  Armin Ilg
+  Reuses the Silicon Wrapper IDEA module, leaving out the barrel and keeping the End-Caps.
+    -->
+    <comment>Silicon wrapper</comment>
+
+    <define>
+        <!-- ATLASPix3 properties -->
+            <constant name="SiWr_sens_rphi_sensitive"       value="19.8*mm"/> 
+            <constant name="SiWr_sens_rphi_periphery"       value="0.4*mm"/> 
+            <constant name="SiWr_sens_rphi_sens_spacing"    value="0.2*mm"/>
+
+            <constant name="SiWr_sens_z_sensitive"      value="18.6*mm"/>
+            <constant name="SiWr_sens_z_periphery"      value="2.4*mm"/>
+            <constant name="SiWr_sens_z_sens_spacing"   value="0.2*mm"/>
+    
+        <!-- Use module of two stitched quads (size of ATLASPix3) one next to another for Silicon Wrapper, multiple of these to form a tile/stave-->
+        <!-- Assuming stitching or other method to extend sensitive sensor region to full quad. Periphery in z only -->
+
+            <constant name="SiWr_mod_z_sensitive"   value="2.0*SiWr_sens_z_sensitive"/> <!-- 37.2 mm -->
+            <constant name="SiWr_mod_z_periphery"   value="2.0*SiWr_sens_z_periphery+SiWr_sens_z_sens_spacing"/> <!-- 5.0 mm -->
+            <constant name="SiWr_mod_z"             value="SiWr_mod_z_sensitive+SiWr_mod_z_periphery"/> <!-- 42.2 mm -->
+
+            <constant name="SiWr_mod_quad_spacing"      value="0.2*mm"/>   <!-- Distance between quads in r-phi-->
+            <constant name="SiWr_mod_rphi_sensitive"    value="4.0*SiWr_sens_rphi_sensitive+2*SiWr_sens_rphi_sens_spacing+2*SiWr_sens_rphi_periphery"/> <!-- 80.4 mm --> 
+            <constant name="SiWr_mod_rphi_periphery"    value="SiWr_mod_quad_spacing"/> <!-- Insensitive region between sensors. 0.2 mm -->
+            <constant name="SiWr_mod_rphi"              value="SiWr_mod_rphi_sensitive+SiWr_mod_rphi_periphery"/> <!-- = 80.6 mm mm -->
+        
+            <constant name="SiWr_Sensitive_Thickness"   value="5e-02*mm"/>
+            <constant name="SiWr_mod_overlap"           value="-(SiWr_mod_z_periphery+0.2*mm)"/> <!-- Overlap of quad modules on two sides of tile/stave along tile/stave to cover quad periphery. 0.2 mm of additional overlap -->
+
+        <!-- Passive material properties -->
+            <!-- Stave-long support -->
+            <constant name="SiWr_support_CarbonFiber_thickness" value="1.4*mm"/> <!-- Use 1.4 mm of carbon fiber support thickness. Together with 50 µm of Silicon this yields 0.499 % X/X0 (1.4 mm/314 mm + 0.05 mm/93.70 mm = 0.00499) -->
+
+            <!-- Cooling pipes -->
+            <constant name="SiWr_Pipe_thickness"    value="0.0955*mm"/>
+            <constant name="SiWr_Pipe_rphi"         value="2.0*mm"/>
+            <constant name="SiWr_Pipe_offset"       value="21.18*mm/2.0"/>
+            <constant name="SiWr_Water_thickness"   value="2.0*mm"/>
+            <constant name="SiWr_Cooling_thickness" value="2.0*SiWr_Pipe_thickness+SiWr_Water_thickness"/>
+
+
+            <!-- Flex: 2 layers of 50 µm Aluminum, 2 layers of 150 µm kapton and 100 µm glue -->
+            <constant name="SiWr_flex_width" value="16.2*mm"/>
+            <constant name="SiWr_flex_Aluminium_thickness" value="0.100*mm"/>
+            <constant name="SiWr_flex_Kapton_thickness" value="0.300*mm"/>
+            <constant name="SiWr_flex_Glue_thickness" value="0.100*mm"/>
+            <constant name="SiWr_flex_thickness" value="SiWr_flex_Aluminium_thickness+SiWr_flex_Kapton_thickness+SiWr_flex_Glue_thickness"/>
+
+            <constant name="SiWr_distance_two_sides"    value="SiWr_Sensitive_Thickness+SiWr_support_CarbonFiber_thickness+SiWr_Cooling_thickness"/>    <!-- Distance between sensor modules along thickness when having alternating modules in front and in the back -->
+
+        <!-- Silicon wrapper disks parameters -->
+
+            <!-- Complex silicon wrapper disk -->
+            <!-- <constant name="SiWrD_tile_nmodules"        value="6"/> -->
+            <!-- <constant name="SiWrD_double_tile_nmodules" value="12"/> -->
+            <!-- <constant name="SiWrD_half_tile_nmodules"   value="3"/> -->
+            <!-- <constant name="SiWrD_tile_length"          value="SiWrD_tile_nmodules*SiWr_mod_z+(SiWrD_tile_nmodules-1)*SiWr_mod_overlap"/>  -->
+            <!-- <constant name="SiWrD_double_tile_length"   value="SiWrD_double_tile_nmodules*SiWr_mod_z+(SiWrD_double_tile_nmodules-1)*SiWr_mod_overlap"/> -->
+            <!-- <constant name="SiWrD_half_tile_length"     value="SiWrD_half_tile_nmodules*SiWr_mod_z+(SiWrD_half_tile_nmodules-1)*SiWr_mod_overlap"/> -->
+
+            <!-- Simplified silicon wrapper disks -->
+            <constant name="SiWrD_tile_nmodules"        value="2"/>
+            <constant name="SiWrD_double_tile_nmodules" value="4"/>
+            <constant name="SiWrD_half_tile_nmodules"   value="1"/>
+            <constant name="SiWrD_tile_length"          value="3.*SiWrD_tile_nmodules*SiWr_mod_z+(3.*SiWrD_tile_nmodules-1)*SiWr_mod_overlap"/> 
+            <constant name="SiWrD_double_tile_length"   value="3.*SiWrD_double_tile_nmodules*SiWr_mod_z+(3.*SiWrD_double_tile_nmodules-1)*SiWr_mod_overlap"/>
+            <constant name="SiWrD_half_tile_length"     value="3.*SiWrD_half_tile_nmodules*SiWr_mod_z+(3.*SiWrD_half_tile_nmodules-1)*SiWr_mod_overlap"/>
+
+            <!-- Other silicon wrapper disks parameters -->
+            <constant name="SiWrD_tile_spacing_row"     value="1.0*mm"/>
+            <constant name="SiWrD_tile_spacing_column"  value="1.0*mm"/>
+
+            <constant name="SiWrD_z1" value="SiWrD_zmin"/>
+            <constant name="SiWrD_z_gap" value="20.0*mm"/>
+            <constant name="SiWrD_z2" value="SiWrD_z1 + SiWrD_z_gap"/>
+
+            <constant name="SiWrD_rmin1" value="4.5*SiWr_mod_rphi+5.0*SiWrD_tile_spacing_column"/> <!-- tile width: SiWr_mod_rphi=80.6 mm. So four and a half modules can fit within SiWrD_inner_radius=350 mm. Resulting rmin is 363.7 mm -->
+            <constant name="SiWrD_rmin2" value="SiWrD_rmin1+SiWr_mod_rphi/2.+1.0*SiWrD_tile_spacing_column"/>    <!-- Offset between disk 1 and 2 to cover holes in coverage -->
+
+            <constant name="SiWrD_layer1_offset" value="0.0*mm"/>   <!-- Offset in direction of tile width for all rows in layer 1. An offset here spreads the two innermost rows so that there is an overlap between the first and second disk everywhere--> 
+            <constant name="SiWrD_layer2_offset" value="0.0*mm"/>   <!-- Offset in direction of tile width for all rows in layer 2. --> 
+            
+            <constant name="SiWrD_layer1_offset1" value="235.0*mm"/>       <!-- Offsets in direction of tile width for the three innermost rows to form the hole in the coverage in the forward region  -->
+            <constant name="SiWrD_layer1_offset2" value="310.0*mm"/>
+            <constant name="SiWrD_layer1_offset3" value="SiWrD_rmin1-15.0*mm"/>
+            <constant name="SiWrD_layer1_offset4" value="SiWrD_rmin1-2.0*mm"/>
+            <constant name="SiWrD_layer1_offset5" value="SiWrD_rmin1"/>
+
+            <constant name="SiWrD_layer2_offset1" value="246.0*mm"/>       <!-- Offsets in direction of tile width for the three innermost rows to form the hole in the coverage in the forward region  -->
+            <constant name="SiWrD_layer2_offset2" value="330.0*mm"/> 
+            <constant name="SiWrD_layer2_offset3" value="SiWrD_rmin2-15.0*mm"/> 
+            <constant name="SiWrD_layer2_offset4" value="SiWrD_rmin2-3.0*mm"/> 
+            <constant name="SiWrD_layer2_offset5" value="SiWrD_rmin2"/> 
+
+             <!-- endcap string dimensions: for now the we set it to the total barrel module string before detailing the staves  -->
+            <constant name="OTEnd_mod_xshift"   value="(OTBar_mod_rphi + OTBar_mod_rphi_spacing) / 2."/> <!-- centre of each module in a row -->
+            <constant name="OTEnd_string_width" value="OTBar_Cooling_Plate_width"/>  <!-- widest part across the string: the cold plate -->
+            <constant name="OTEnd_mod_length"   value="OTBar_mod_z"/>                <!-- one module, along the string -->
+            <constant name="OTEnd_mod_step"     value="OTBar_mod_z_spacing"/>        <!-- gap between modules along the string -->
+
+                        <!-- Electronics and cooling of one face -->
+                        <!-- pipe formula : the endcap builder only builds boxes, so we need to calculate the equivalent thickness of the pipe -->
+            <constant name="OTEnd_front_cooling_z" value="OTBar_Flex_thickness + OTBar_HDI_thickness + OTBar_sens_Copper_thickness + OTBar_Sensitive_thickness"/>
+            <constant name="OTEnd_pipe_width"    value="2 * OTBar_Cooling_Pipe_outer_radius"/>
+            <constant name="OTEnd_pipe_wall_eq"  value="pi * (OTBar_Cooling_Pipe_outer_radius*OTBar_Cooling_Pipe_outer_radius - OTBar_Cooling_Pipe_inner_radius*OTBar_Cooling_Pipe_inner_radius) / OTEnd_pipe_width"/>
+            <constant name="OTEnd_pipe_fluid_eq" value="pi * OTBar_Cooling_Pipe_inner_radius*OTBar_Cooling_Pipe_inner_radius / OTEnd_pipe_width"/>
+            <constant name="OTEnd_face_thickness" value="OTEnd_front_cooling_z + OTBar_Cooling_Plate_thickness + OTEnd_pipe_wall_eq + OTEnd_pipe_fluid_eq"/>
+ 
+                        <!-- Back face: the same layers in reverse order -->
+            <constant name="OTEnd_back_plate_z"  value="OTEnd_pipe_fluid_eq + OTEnd_pipe_wall_eq"/>
+            <constant name="OTEnd_back_sensor_z" value="OTEnd_back_plate_z + OTBar_Cooling_Plate_thickness"/>
+            <constant name="OTEnd_support_thickness" value="50*mm"/>  <!-- space kept for the disk support (sandwich), not built yet -->
+            <!-- Test bench (temporary) -->
+            <constant name="OTEnd_bench_z"        value="1484*mm"/>  <!-- EC1 position, option 1 -->
+            <constant name="OTEnd_bench_back_z"   value="OTEnd_bench_z + OTEnd_face_thickness + OTEnd_support_thickness"/>
+            <constant name="OTEnd_bench_rmin"     value="500*mm"/>
+            <constant name="OTEnd_bench_nmodules" value="4"/>
+            <constant name="OTEnd_bench_gap"      value="1*mm"/>
+            <constant name="OTEnd_col_pitch" value="OTEnd_string_width + OTEnd_bench_gap"/>
+            <constant name="OTEnd_row_pitch" value="OTEnd_bench_nmodules*OTEnd_mod_length + (OTEnd_bench_nmodules-1)*OTEnd_mod_step + OTEnd_bench_gap"/>
+    </define>        
+
+
+    <!--  Definition of the readout segmentation/definition  -->
+    <readouts>
+        <readout name="OTEndcapCollection">
+            <id>${GlobalTrackerReadoutID}</id>
+        </readout>
+    </readouts>
+
+
+    <!-- Detailed endcap using tile of 12 ATLASPix3 modules -->
+    <!-- Vertex disks -->
+    <detectors>
+        <detector id="DetID_OTEndcap" name="OTEndcap" vis="SiWrVis" type="VertexEndcap_detailed_o1_v03" readout="OTEndcapCollection" reflect="true" region="OTEndcapRegion">
+            <envelope vis="SiWrVis">
+                <shape type="BooleanShape" operation="Subtraction" material="Air">
+                    <shape type="Tube" rmin="SiWrD_inner_radius" rmax="SiWrD_outer_radius" dz="SiWrD_zmax"/>   <!-- Silicon Wrapper disks on one side -->
+                    <position x="0" y="0" z="0"/>
+
+                    <shape type="Tube" rmin="SiWrD_inner_radius" rmax="SiWrD_outer_radius" dz="SiWrD_zmin"/>       <!-- Silicon Wrapper disks on one side -->
+                    <position x="0" y="0" z="0"/>
+                </shape>
+            </envelope>
+            <comment>Silicon wrapper disks</comment>
+
+            <type_flags type=" DetType_TRACKER + DetType_PIXEL + DetType_ENDCAP"/>
+
+            <!-- One row of the ALFA module string, front face (facing the interaction point).
+                 Same layers and order as the bottom string of an ALFA barrel stave, with r replaced by z. -->
+            <module name="OTEndModuleFront">
+                <components name="OTEndFlex" z_offset="0*mm">
+                    <component thickness="OTBar_Flex_Kapton_thickness"    width="OTBar_Flex_width" z_offset="0*mm" material="Kapton" vis="OTBarFlexVis"/>
+                    <component thickness="OTBar_Flex_Coverlay_thickness"  width="OTBar_Flex_width" z_offset="OTBar_Flex_Kapton_thickness" material="Coverlay" vis="OTBarFlexVis"/>
+                    <component thickness="OTBar_Flex_Aluminium_thickness" width="OTBar_Flex_width" z_offset="OTBar_Flex_Kapton_thickness + OTBar_Flex_Coverlay_thickness" material="Aluminum" vis="OTBarFlexVis"/>
+                    <component thickness="OTBar_Flex_Epoxy_thickness"     width="OTBar_Flex_width" z_offset="OTBar_Flex_Kapton_thickness + OTBar_Flex_Coverlay_thickness + OTBar_Flex_Aluminium_thickness" material="Epoxy" vis="OTBarFlexVis"/>
+                </components>
+
+                <components name="OTEndHDI" z_offset="OTBar_Flex_thickness">
+                    <component thickness="OTBar_HDI_Coverlay_thickness"  width="OTBar_HDI_width" z_offset="0*mm" material="Coverlay" vis="OTBarHDIVis"/>
+                    <component thickness="OTBar_HDI_Aluminium_thickness" width="OTBar_HDI_width" z_offset="OTBar_HDI_Coverlay_thickness" material="Aluminum" vis="OTBarHDIVis"/>
+                    <component thickness="OTBar_HDI_Prepreg_thickness"   width="OTBar_HDI_width" z_offset="OTBar_HDI_Coverlay_thickness + OTBar_HDI_Aluminium_thickness" material="Prepreg" vis="OTBarHDIVis"/>
+                </components>
+
+                <components name="OTEndSensorCu" z_offset="OTBar_Flex_thickness + OTBar_HDI_thickness">
+                    <component thickness="OTBar_sens_Copper_thickness" width="OTBar_sens_Copper_width" z_offset="0*mm" material="Copper" vis="OTBarCopperVis"/>
+                </components>
+
+                <sensor name="OTEndSensor" z_offset="OTBar_Flex_thickness + OTBar_HDI_thickness + OTBar_sens_Copper_thickness" thickness="OTBar_Sensitive_thickness" material="Silicon">
+                    <include ref="OuterTrackerEndcap_module.xml"/>
+                </sensor>
+
+                <components name="OTEndCooling" z_offset="OTEnd_front_cooling_z">
+                    <component thickness="OTBar_Cooling_Plate_CFleece_thickness" width="OTBar_Cooling_Plate_width" z_offset="0*mm" material="CarbonFleece" vis="OTBarCoolingPlateVis"/>
+                    <component thickness="OTBar_Cooling_Plate_K13D2U_thickness"  width="OTBar_Cooling_Plate_width" z_offset="OTBar_Cooling_Plate_CFleece_thickness" material="K13D2U" vis="OTBarCoolingPlateVis"/>
+                    <component thickness="OTBar_Cooling_Plate_CPaper_thickness"  width="OTBar_Cooling_Plate_width" z_offset="OTBar_Cooling_Plate_CFleece_thickness + OTBar_Cooling_Plate_K13D2U_thickness" material="CarbonPaper" vis="OTBarCoolingPlateVis"/>
+                    <!-- Pipes: boxes with the same cross-section area as the barrel's round pipes -->
+                    <component thickness="OTEnd_pipe_wall_eq"  width="OTEnd_pipe_width" offset="-OTBar_Cooling_Pipe_offset" z_offset="OTBar_Cooling_Plate_thickness" material="Kapton" vis="OTBarCoolingPipeVis"/>
+                    <component thickness="OTEnd_pipe_fluid_eq" width="OTEnd_pipe_width" offset="-OTBar_Cooling_Pipe_offset" z_offset="OTBar_Cooling_Plate_thickness + OTEnd_pipe_wall_eq" material="OpteonSF10" vis="OTBarCoolingFluidVis"/>
+                    <component thickness="OTEnd_pipe_wall_eq"  width="OTEnd_pipe_width" offset="+OTBar_Cooling_Pipe_offset" z_offset="OTBar_Cooling_Plate_thickness" material="Kapton" vis="OTBarCoolingPipeVis"/>
+                    <component thickness="OTEnd_pipe_fluid_eq" width="OTEnd_pipe_width" offset="+OTBar_Cooling_Pipe_offset" z_offset="OTBar_Cooling_Plate_thickness + OTEnd_pipe_wall_eq" material="OpteonSF10" vis="OTBarCoolingFluidVis"/>
+                </components>
+            </module>
+
+                        <!-- One row of the ALFA module string, back face: the front face mirrored in z
+                 (like the top string of an ALFA barrel stave). -->
+            <module name="OTEndModuleBack">
+                <components name="OTEndCooling" z_offset="0*mm">
+                    <component thickness="OTEnd_pipe_fluid_eq" width="OTEnd_pipe_width" offset="-OTBar_Cooling_Pipe_offset" z_offset="0*mm" material="OpteonSF10" vis="OTBarCoolingFluidVis"/>
+                    <component thickness="OTEnd_pipe_wall_eq"  width="OTEnd_pipe_width" offset="-OTBar_Cooling_Pipe_offset" z_offset="OTEnd_pipe_fluid_eq" material="Kapton" vis="OTBarCoolingPipeVis"/>
+                    <component thickness="OTEnd_pipe_fluid_eq" width="OTEnd_pipe_width" offset="+OTBar_Cooling_Pipe_offset" z_offset="0*mm" material="OpteonSF10" vis="OTBarCoolingFluidVis"/>
+                    <component thickness="OTEnd_pipe_wall_eq"  width="OTEnd_pipe_width" offset="+OTBar_Cooling_Pipe_offset" z_offset="OTEnd_pipe_fluid_eq" material="Kapton" vis="OTBarCoolingPipeVis"/>
+                    <component thickness="OTBar_Cooling_Plate_CPaper_thickness"  width="OTBar_Cooling_Plate_width" z_offset="OTEnd_back_plate_z" material="CarbonPaper" vis="OTBarCoolingPlateVis"/>
+                    <component thickness="OTBar_Cooling_Plate_K13D2U_thickness"  width="OTBar_Cooling_Plate_width" z_offset="OTEnd_back_plate_z + OTBar_Cooling_Plate_CPaper_thickness" material="K13D2U" vis="OTBarCoolingPlateVis"/>
+                    <component thickness="OTBar_Cooling_Plate_CFleece_thickness" width="OTBar_Cooling_Plate_width" z_offset="OTEnd_back_plate_z + OTBar_Cooling_Plate_CPaper_thickness + OTBar_Cooling_Plate_K13D2U_thickness" material="CarbonFleece" vis="OTBarCoolingPlateVis"/>
+                </components>
+
+                <sensor name="OTEndSensor" z_offset="OTEnd_back_sensor_z" thickness="OTBar_Sensitive_thickness" material="Silicon">
+                    <include ref="OuterTrackerEndcap_module.xml"/>
+                </sensor>
+
+                <components name="OTEndSensorCu" z_offset="OTEnd_back_sensor_z + OTBar_Sensitive_thickness">
+                    <component thickness="OTBar_sens_Copper_thickness" width="OTBar_sens_Copper_width" z_offset="0*mm" material="Copper" vis="OTBarCopperVis"/>
+                </components>
+
+                <components name="OTEndHDI" z_offset="OTEnd_back_sensor_z + OTBar_Sensitive_thickness + OTBar_sens_Copper_thickness">
+                    <component thickness="OTBar_HDI_Prepreg_thickness"   width="OTBar_HDI_width" z_offset="0*mm" material="Prepreg" vis="OTBarHDIVis"/>
+                    <component thickness="OTBar_HDI_Aluminium_thickness" width="OTBar_HDI_width" z_offset="OTBar_HDI_Prepreg_thickness" material="Aluminum" vis="OTBarHDIVis"/>
+                    <component thickness="OTBar_HDI_Coverlay_thickness"  width="OTBar_HDI_width" z_offset="OTBar_HDI_Prepreg_thickness + OTBar_HDI_Aluminium_thickness" material="Coverlay" vis="OTBarHDIVis"/>
+                </components>
+
+                <components name="OTEndFlex" z_offset="OTEnd_back_sensor_z + OTBar_Sensitive_thickness + OTBar_sens_Copper_thickness + OTBar_HDI_thickness">
+                    <component thickness="OTBar_Flex_Epoxy_thickness"     width="OTBar_Flex_width" z_offset="0*mm" material="Epoxy" vis="OTBarFlexVis"/>
+                    <component thickness="OTBar_Flex_Aluminium_thickness" width="OTBar_Flex_width" z_offset="OTBar_Flex_Epoxy_thickness" material="Aluminum" vis="OTBarFlexVis"/>
+                    <component thickness="OTBar_Flex_Coverlay_thickness"  width="OTBar_Flex_width" z_offset="OTBar_Flex_Epoxy_thickness + OTBar_Flex_Aluminium_thickness" material="Coverlay" vis="OTBarFlexVis"/>
+                    <component thickness="OTBar_Flex_Kapton_thickness"    width="OTBar_Flex_width" z_offset="OTBar_Flex_Epoxy_thickness + OTBar_Flex_Aluminium_thickness + OTBar_Flex_Coverlay_thickness" material="Kapton" vis="OTBarFlexVis"/>
+                </components>
+            </module>
+
+            <comment> TEST BENCH: 3 columns x 3 rows of strings at the EC1 position, both sides of the detector </comment>
+            <layer id="0" z="OTEnd_bench_z" nphi="1" rmin="OTEnd_bench_rmin" rmax="SiWrD_outer_radius">
+                <stave module="OTEndModuleFront" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="0*OTEnd_col_pitch" offset="-OTEnd_row_pitch"/>
+                <stave module="OTEndModuleFront" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="0*OTEnd_col_pitch" offset="0*mm"/>
+                <stave module="OTEndModuleFront" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="0*OTEnd_col_pitch" offset="+OTEnd_row_pitch"/>
+                <stave module="OTEndModuleFront" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="1*OTEnd_col_pitch" offset="-OTEnd_row_pitch"/>
+                <stave module="OTEndModuleFront" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="1*OTEnd_col_pitch" offset="0*mm"/>
+                <stave module="OTEndModuleFront" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="1*OTEnd_col_pitch" offset="+OTEnd_row_pitch"/>
+                <stave module="OTEndModuleFront" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="2*OTEnd_col_pitch" offset="-OTEnd_row_pitch"/>
+                <stave module="OTEndModuleFront" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="2*OTEnd_col_pitch" offset="0*mm"/>
+                <stave module="OTEndModuleFront" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="2*OTEnd_col_pitch" offset="+OTEnd_row_pitch"/>
+            </layer>
+            <layer id="1" z="OTEnd_bench_back_z" nphi="1" rmin="OTEnd_bench_rmin" rmax="SiWrD_outer_radius">
+                <stave module="OTEndModuleBack" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="0*OTEnd_col_pitch" offset="-OTEnd_row_pitch"/>
+                <stave module="OTEndModuleBack" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="0*OTEnd_col_pitch" offset="0*mm"/>
+                <stave module="OTEndModuleBack" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="0*OTEnd_col_pitch" offset="+OTEnd_row_pitch"/>
+                <stave module="OTEndModuleBack" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="1*OTEnd_col_pitch" offset="-OTEnd_row_pitch"/>
+                <stave module="OTEndModuleBack" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="1*OTEnd_col_pitch" offset="0*mm"/>
+                <stave module="OTEndModuleBack" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="1*OTEnd_col_pitch" offset="+OTEnd_row_pitch"/>
+                <stave module="OTEndModuleBack" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="2*OTEnd_col_pitch" offset="-OTEnd_row_pitch"/>
+                <stave module="OTEndModuleBack" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="2*OTEnd_col_pitch" offset="0*mm"/>
+                <stave module="OTEndModuleBack" nmodules="OTEnd_bench_nmodules" step="OTEnd_mod_step" dz="0*mm" r="2*OTEnd_col_pitch" offset="+OTEnd_row_pitch"/>
+            </layer>
+        </detector>
+    </detectors>   
+
+    <!-- Plugin needed for the surfaces-->
+    <plugins>
+        <plugin name="DD4hep_GenericSurfaceInstallerPlugin">
+            <argument value="OTEndcap"/> 
+            <argument value="dimension=2"/>
+            <argument value="u_x=-1."/>
+            <argument value="v_y=1."/>
+            <argument value="n_z=-1."/>
+        </plugin>
+    </plugins>
+</lccdd>

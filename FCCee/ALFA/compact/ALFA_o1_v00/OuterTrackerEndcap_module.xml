@@ -1,0 +1,15 @@
+<lccdd>
+
+    <comment> One row of an ALFA module string, two Outer Tracker modules side by side </comment>
+
+    <!-- Left module (x < 0) -->
+    <component name="Left_Module_Left_Column"   sensitive="True"  ymin="-OTBar_mod_z / 2." ymax="OTBar_mod_z / 2." xmin="-OTEnd_mod_xshift - OTBar_mod_rphi / 2."           xmax="-OTEnd_mod_xshift - OTBar_mod_rphi_periphery / 2." vis="OTBarSensitiveVis"/>
+    <component name="Left_Module_Right_Column"  sensitive="True"  ymin="-OTBar_mod_z / 2." ymax="OTBar_mod_z / 2." xmin="-OTEnd_mod_xshift + OTBar_mod_rphi_periphery / 2." xmax="-OTEnd_mod_xshift + OTBar_mod_rphi / 2."           vis="OTBarSensitiveVis"/>
+    <component name="Left_Module_Periphery"     sensitive="False" ymin="-OTBar_mod_z / 2." ymax="OTBar_mod_z / 2." xmin="-OTEnd_mod_xshift - OTBar_mod_rphi_periphery / 2." xmax="-OTEnd_mod_xshift + OTBar_mod_rphi_periphery / 2." vis="OTBarPeripheryVis"/>
+
+    <!-- Right module (x > 0) -->
+    <component name="Right_Module_Left_Column"  sensitive="True"  ymin="-OTBar_mod_z / 2." ymax="OTBar_mod_z / 2." xmin="+OTEnd_mod_xshift - OTBar_mod_rphi / 2."           xmax="+OTEnd_mod_xshift - OTBar_mod_rphi_periphery / 2." vis="OTBarSensitiveVis"/>
+    <component name="Right_Module_Right_Column" sensitive="True"  ymin="-OTBar_mod_z / 2." ymax="OTBar_mod_z / 2." xmin="+OTEnd_mod_xshift + OTBar_mod_rphi_periphery / 2." xmax="+OTEnd_mod_xshift + OTBar_mod_rphi / 2."           vis="OTBarSensitiveVis"/>
+    <component name="Right_Module_Periphery"    sensitive="False" ymin="-OTBar_mod_z / 2." ymax="OTBar_mod_z / 2." xmin="+OTEnd_mod_xshift - OTBar_mod_rphi_periphery / 2." xmax="+OTEnd_mod_xshift + OTBar_mod_rphi_periphery / 2." vis="OTBarPeripheryVis"/>
+
+</lccdd>
